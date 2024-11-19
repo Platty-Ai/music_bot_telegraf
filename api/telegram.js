@@ -52,12 +52,12 @@ bot.command('play', async (ctx) => {
         }
 
         // Check if bot is in the group
-        const chatMember = await ctx.telegram.getChatMember(ctx.chat.id, ctx.botInfo.id);
-        console.log('Chat member status:', chatMember.status);
+        // const chatMember = await ctx.telegram.getChatMember(ctx.chat.id, ctx.botInfo.id);
+        // console.log('Chat member status:', chatMember.status);
 
-        if (!chatMember || chatMember.status === 'left') {
-            return ctx.reply('Please add me to the group first!');
-        }
+        // if (!chatMember || chatMember.status === 'left') {
+        //     return ctx.reply('Please add me to the group first!');
+        // }
 
         // Send "processing" message
         const processingMsg = await ctx.reply('🎵 Processing your request...');
@@ -65,7 +65,7 @@ bot.command('play', async (ctx) => {
         // Make request to music server with updated parameters
         const response = await axios.post(`${process.env.GOOGLE_CLOUD_URL}/play_music/`, {
             query: query,
-            chat_username: "testingMusic54", // Changed from chat_id to chat_username
+            chat_username: ctx.chat.username, // Changed from chat_id to chat_username
             video: true
         });
 
