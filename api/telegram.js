@@ -181,10 +181,14 @@ bot.command('stop', (ctx) => {
     ctx.reply('⏹ Playback stopped');
 });
 
-// Start the bot
-bot.launch().then(() => {
-    console.log('Bot is running...');
-}).catch(err => {
-    console.error('Failed to start bot:', err);
-});
-
+module.exports = async (request, response) => {
+    try {
+      if (request?.body) {
+        console.log(request.body);
+        await bot.handleUpdate(request.body);
+      }
+    } catch (error) {
+      console.error("Error handling update", error.message);
+    }
+    response.send("OK");
+  };
